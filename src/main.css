@@ -1,0 +1,166 @@
+/* Simple CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+a {
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .a {
+    grid-template-columns: 1fr 1fr;
+  }
+  .aa {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem;
+  }
+}
+@media (max-width: 1024px) {
+  .aa {
+    display: none;
+  }
+}
+
+a {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.a {
+  display: grid;
+  height: 100%;
+}
+
+.aaa {
+  color: white;
+  align-items: center;
+}
+
+.aab {
+  color: white;
+  margin-top: auto;
+}
+.ab {
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.aba {
+  width: 100%;
+  max-width: 350px;
+  display: grid;
+}
+
+input,
+button {
+  width: 100%;
+  text-decoration: none;
+  background: none;
+}
+
+.abaac {
+  position: relative;
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.line {
+  border-top: 0.5px solid black;
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+.or {
+  padding: 0.5rem;
+  z-index: 23;
+  background: white;
+}
+
+button {
+  border: 0 solid #e5e7eb;
+  border-width: 1px;
+  border-radius: calc(0.5rem - 2px);
+  margin: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  height: 2.25rem;
+  background: none;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+}
+
+input {
+  padding: 0.25rem 0.75rem;
+  border-radius: calc(0.5rem - 2px);
+  border: 0 solid #e5e7eb;
+  border-color: hsl(240, 5.9%, 90%);
+  background-color: transparent;
+  border-width: 1px;
+  height: 2.25rem;
+  margin-bottom: 0.5rem;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;   
+}
+
+.abaaba {
+  background-color: black;
+  color: white;
+}
