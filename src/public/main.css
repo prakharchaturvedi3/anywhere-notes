@@ -1,4 +1,9 @@
+
+
 /* Simple CSS Reset */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +14,9 @@
 html,
 body {
   height: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
   width: 100%;
 }
 
@@ -159,8 +167,23 @@ input {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 0.15s;   
 }
-
+.lin {
+  color: black;
+}
 .abaaba {
   background-color: black;
   color: white;
+}
+.hide {
+  display: none;
+}
+.abaaa {
+  margin-bottom: 1rem;
+}
+svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.git svg {
+  margin-right: .5rem;
 }

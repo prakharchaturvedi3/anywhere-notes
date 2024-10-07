@@ -1,0 +1,118 @@
+.a,
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+.aaa,
+.aba {
+  padding: 0.5rem;
+  display: flex;
+}
+.a,
+body,
+html,
+textarea {
+  height: 100%;
+}
+.a,
+.aaa,
+.aba,
+.abaa {
+  display: flex;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0 solid #e3e3e3;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+canvas,
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  overflow-wrap: break-word;
+}
+a {
+  text-decoration: none;
+}
+.aa {
+  width: 33%;
+  max-width: 300px;
+  background: #171717;
+}
+.aaa {
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  width: 100%;
+}
+svg {
+  color: #b4b4b4;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+.aab,
+.ab,
+.aba,
+.aba h3,
+textarea {
+  width: 100%;
+}
+.aab {
+  height: calc(100% - 3rem);
+}
+.ab {
+  background: #212121;
+}
+.aba {
+  border-bottom: 1px;
+  font-style: italic;
+  font-weight: bolder;
+  height: 3rem;
+}
+.abb {
+  height: calc(100% - 3rem);
+  border-bottom: 1px solid grey;
+}
+textarea {
+  border: none;
+  background-color: inherit;
+  color: #fff;
+  padding: 0.4rem;
+}
+.abaa {
+  align-items: center;
+}
+.abaa svg {
+  margin-right: 0.5rem;
+}
+.aba h3 {
+  color: #fff;
+  text-align: center;
+}
+.hide {
+    display: none;
+}
