@@ -1,23 +1,21 @@
-import { createUser } from "../models/userModel.js";
-import { createJWT, hashPassword } from "../services/authService.js";
+import { createToken } from "../services/authServices.js";
+import { generateHash, newUser } from "../services/userService.js";
+import { handleError } from "../utils/errorUtils.js";
 
-export async function registerUser(req, res) {
-  const email = req.body.email;
-  const password = req.body.password;
-  const name = req.body.name;
-  const user = {
-    email: email,
-    name: name,
-    password: await hashPassword(password),
-  };
-  const result = await createUser(user);
-  const token = await createJWT(user);
-  res.json({ token, message: "User created successfully!" });
+export function login(req, res) {
+  const token = createToken(req.user_.id);
+  res.status(200);
+  res.json({ token, user: req.user_ });
   res.end();
 }
 
-export async function loginUser(req, res) {
-  const token = await createJWT(req._user);
-  res.json({ token, message: "User logged in successfully!" });
-  res.end();
+export async function register(req, res) {
+  req.user_.password = await generateHash(req.user_.password);
+  const result = await newUser(req.user_);
+  if (!result) {
+    handleError(err, req, res, next);
+    return;
+  }
+  req.user_.id = result.id;
+  login(req, res);
 }
