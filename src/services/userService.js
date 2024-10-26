@@ -1,18 +1,12 @@
-import { createUser, readUserByEmail } from "../models/userModels.js";
-import bcrypt from "bcrypt";
+import { dbCreateUser, dbReadUserByEmail } from "../models/userModels.js";
+import * as bcrypt from "bcrypt";
 
 export function findUserByEmail(email) {
-  return readUserByEmail(email);
-}
-
-export function findUserById(id) {
-  return getUserById(id);
+  return dbReadUserByEmail(email);
 }
 
 export function newUser(record) {
-
-  console.log('here');
-  return createUser(record);
+  return dbCreateUser(record);
 }
 
 export function comparePassword(password, hash) {
@@ -20,6 +14,5 @@ export function comparePassword(password, hash) {
 }
 
 export function generateHash(password) {
-  return bcrypt.hash(password, 5);
+  return bcrypt.hashSync(password, Number(process.env.SALT));
 }
-

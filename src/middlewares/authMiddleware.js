@@ -1,6 +1,4 @@
 import { verifyToken } from "../services/authServices.js";
-import { findPageById } from "../services/pageService.js";
-import { handleError } from "../utils/errorUtils.js";
 import {
   validEmail,
   validName,
@@ -8,102 +6,54 @@ import {
 } from "../utils/validationUtils.js";
 import { findUserByEmail } from "../services/userService.js";
 
+export async function registration(req, res, next) {
+  const { email, password } = req.body;
+
+  try {
+    if (!validEmail(email)) {
+      throw new Error("Invalid Email");
+    }
+    if (!validPassword(password)) {
+      throw new Error("Invalid Password");
+    }
+    const result = await findUserByEmail(email);
+    if (!result) {
+      throw new Error("User Not Found");
+    }
+    req.user_ = result;
+  } catch (err) {
+    return next(err);
+  }
+  next();
+}
+
 export function protect(req, res, next) {
   const claim = verifyToken(req.headers.authorization);
   if (!claim) {
-    const err = {
-      statusCode: 401,
-      message: "Invalid Token",
-    };
-    handleError(err, req, res, next);
-    return;
+    throw new Error("Please login Again!");
   }
   req.user_ = claim;
   next();
 }
 
-export async function access(req, res, next) {
-  const pid = req.params.id;
-  const result = await findPageById(pid);
-  if (!result || result.userId !== req.user_.id) {
-    const err = {
-      statusCode: 400,
-      message: "Unauthorized access",
-    };
-    handleError(err, req, res, next);
-    return;
-  }
-  req.page_ = result;
-  next();
-}
-
-export async function registration(req, res, next) {
-  console.log("Here");
-  const { email, password } = req.body;
-  if (!validEmail(email)) {
-    const err = {
-      statusCode: 400,
-      message: "Invalid email",
-    };
-    handleError(err, req, res, next);
-    return null;
-  }
-  if (!validPassword(password)) {
-    const err = {
-      statusCode: 400,
-      message: "Invalid password",
-    };
-    handleError(err, req, res, next);
-    return null;
-  }
-  const result = await findUserByEmail(email);
-  if (!result) {
-    const err = {
-      statusCode: 400,
-      message: "User not found",
-    };
-    handleError(err, req, res, next);
-    return null;
-  }
-  req.user_ = result;
-  next();
-}
-
 export async function availability(req, res, next) {
   const { email, password, name } = req.body;
-  if (!validEmail(email)) {
-    const err = {
-      statusCode: 400,
-      message: "Invalid email",
-    };
-    handleError(err, req, res, next);
-    return null;
-  }
-  if (!validPassword(password)) {
-    const err = {
-      statusCode: 400,
-      message: "Invalid password",
-    };
-    handleError(err, req, res, next);
-    return null;
-  }
-  if (!validName(name)) {
-    const err = {
-      statusCode: 400,
-      message: "Invalid name",
-    };
-    handleError(err, req, res, next);
-    return null;
-  }
-  const result = await findUserByEmail(email);
-  console.log(result);
-  if (result) {
-    const err = {
-      statusCode: 400,
-      message: "User already exist",
-    };
-    handleError(err, req, res, next);
-    return;
+  try {
+    if (!validEmail(email)) {
+      throw new Error("Invalid Email");
+    }
+    if (!validPassword(password)) {
+      throw new Error("Invalid Password");
+    }
+    if (!validName(name)) {
+      throw new Error("Invalid Name");
+    }
+    const result = await findUserByEmail(email);
+    if (result) {
+      throw new Error("User Already Exist");
+    }
+  } catch (err) {
+    return next(err);
   }
   req.user_ = req.body;
   next();

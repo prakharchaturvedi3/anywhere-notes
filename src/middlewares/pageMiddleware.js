@@ -1,18 +1,20 @@
 import { findPageById } from "../services/pageService.js";
-import { handleError } from "../utils/errorUtils.js";
 import { validArray, validNonEmptyString } from "../utils/validationUtils.js";
 
 export async function pageAccess(req, res, next) {
   const pid = req.params.id;
-  const page = await findPageById(pid);
-  if (!page) {
-    return null;
+  try {
+    const page = await findPageById(pid);
+    if (!page) {
+      throw new Error("Page Not Found");
+    }
+    if (page.userId !== req.user_.id) {
+      throw new Error("Page Not Found");
+    }
+    req.page_ = page;
+  } catch (err) {
+    return next(err);
   }
-  if (page.userId !== req.user_.id) {
-    handleError(err, req, res, next);
-    return null;
-  }
-  req.page_ = page;
   next();
 }
 
@@ -22,21 +24,14 @@ export function pageDataValidaton(req, res, next) {
     tags = [];
   }
   if (!validNonEmptyString(title)) {
-    const err = {
-      statusCode: 400,
-      message: "Invalid title",
-    };
-    handleError(err, req, res, next);
-    return null;
+    throw new Error("Empty or Invalid Title");
   }
   if (typeof content !== "string") {
-    const err = {
-      statusCode: 400,
-      message: "Invalid content",
-    };
-    handleError(err, req, res, next);
-    return null;
+    throw new Error("Invalid Content");
   }
-  req.page_ = { title, content, tags, userId: req.user_.id };
+
+  req.page_.title = title;
+  req.page_.content = content;
+  req.page_.tags = tags;
   next();
 }

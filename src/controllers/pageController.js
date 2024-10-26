@@ -1,5 +1,9 @@
-import { findPagesByUserId, newPage } from "../services/pageService.js";
-import { handleError } from "../utils/errorUtils.js";
+import {
+  deactivatePage,
+  findPagesByUserId,
+  newPage,
+  updatePage,
+} from "../services/pageService.js";
 
 export function sendPage(req, res) {
   res.json({ data: req.page_, user: req.user_ });
@@ -11,28 +15,24 @@ export async function sendAllPages(req, res) {
   res.json({ data: result, user: req.user_ });
 }
 
-export async function updatePage(req, res) {
-  const result = await updatePage(req.body);
+export async function writePage(req, res) {
+  const result = await updatePage(req.page_);
   res.json({ data: result, user: req.user_ });
   res.end();
 }
 
-export async function removePage(req, res) {
-  const result = await removePage(req.body);
+export async function deletePage(req, res) {
+  const result = await deactivatePage(req.page_);
   res.json({ data: result, user: req.user_ });
   res.end();
 }
 
 export async function createNewPage(req, res) {
-  const result = await newPage(req.page_);
-  if (!result) {
-    const err = {
-      statusCode: 400,
-      message: "Page not created",
-    };
-    handleError(err, req, res);
-    return
+  try {
+    const result = await newPage(req.page_);
+    res.json({ data: result, user: req.user_ });
+    res.end();
+  } catch (err) {
+    return next(err);
   }
-  res.json({ data: result, user: req.user_ });
-  res.end();
 }

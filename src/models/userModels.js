@@ -1,7 +1,6 @@
-import { handleError } from "../utils/errorUtils.js";
 import { prisma } from "./db.js";
 
-export function readUserByEmail(email) {
+export function dbReadUserByEmail(email) {
   try {
     return prisma.user.findUnique({
       where: {
@@ -14,12 +13,11 @@ export function readUserByEmail(email) {
       },
     });
   } catch (err) {
-    return null;
+    next(err);
   }
 }
 
-export function createUser(record) {
-  console.log("fdsd");
+export function dbCreateUser(record) {
   try {
     return prisma.user.create({
       data: {
@@ -29,7 +27,6 @@ export function createUser(record) {
       },
     });
   } catch (err) {
-    handleError(err, req, res, next);
-    return null;
+    next(err);
   }
 }

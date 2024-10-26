@@ -1,7 +1,6 @@
-import { handleError } from "../utils/errorUtils.js";
 import { prisma } from "./db.js";
 
-export function readPageById(pageId) {
+export function dbReadPageById(pageId) {
   try {
     return prisma.page.findUnique({
       where: {
@@ -10,16 +9,16 @@ export function readPageById(pageId) {
       },
     });
   } catch (err) {
-    handleError(err, req, res, next);
-    return null;
+    next(err);
   }
 }
 
-export function readPagesByUserId(userId) {
+export function dbReadPageByUserId(userId) {
   try {
     return prisma.page.findMany({
       where: {
         userId,
+        active: true,
       },
       select: {
         id: true,
@@ -30,11 +29,11 @@ export function readPagesByUserId(userId) {
       },
     });
   } catch (err) {
-    return null;
+    next(err);
   }
 }
 
-export function createPage(record) {
+export function dbCreatePage(record) {
   try {
     return prisma.page.create({
       data: {
@@ -45,12 +44,11 @@ export function createPage(record) {
       },
     });
   } catch (err) {
-    console.log(err);
-    return null;
+    next(err);
   }
 }
 
-export function writePage(record) {
+export function dbUpdatePage(record) {
   try {
     return prisma.page.update({
       where: {
@@ -63,7 +61,7 @@ export function writePage(record) {
         tags: record.tags,
       },
     });
-  } catch {
-    return null;
+  } catch (err) {
+    next(err);
   }
 }
