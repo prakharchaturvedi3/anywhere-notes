@@ -5,24 +5,26 @@ import {
   validPassword,
 } from "../utils/validationUtils.js";
 import { findUserByEmail } from "../services/userService.js";
+import { ErrorConstructors } from "../utils/errorUtils.js";
 
 export async function registration(req, res, next) {
   const { email, password } = req.body;
 
   try {
     if (!validEmail(email)) {
-      throw new Error("Invalid Email");
+      throw new ErrorConstructors.BadRequest("Invalid Email");
     }
     if (!validPassword(password)) {
-      throw new Error("Invalid Password");
+      throw new ErrorConstructors.BadRequest("Invalid Password");
     }
     const result = await findUserByEmail(email);
     if (!result) {
-      throw new Error("User Not Found");
+      throw new ErrorConstructors.BadRequest("User Not Found");
     }
     req.user_ = result;
   } catch (err) {
-    return next(err);
+    next(err);
+    return;
   }
   next();
 }
@@ -30,7 +32,7 @@ export async function registration(req, res, next) {
 export function protect(req, res, next) {
   const claim = verifyToken(req.headers.authorization);
   if (!claim) {
-    throw new Error("Please login Again!");
+    throw new ErrorConstructors.UnauthorizedRequest("Please login Again!");
   }
   req.user_ = claim;
   next();
@@ -40,17 +42,17 @@ export async function availability(req, res, next) {
   const { email, password, name } = req.body;
   try {
     if (!validEmail(email)) {
-      throw new Error("Invalid Email");
+      throw new ErrorConstructors.BadRequest("Invalid Email");
     }
     if (!validPassword(password)) {
-      throw new Error("Invalid Password");
+      throw new ErrorConstructors.BadRequest("Invalid Password");
     }
     if (!validName(name)) {
-      throw new Error("Invalid Name");
+      throw new ErrorConstructors.BadRequest("Invalid Name");
     }
     const result = await findUserByEmail(email);
     if (result) {
-      throw new Error("User Already Exist");
+      throw new ErrorConstructors.BadRequest("User Already Exist");
     }
   } catch (err) {
     return next(err);

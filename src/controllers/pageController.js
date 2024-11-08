@@ -16,6 +16,7 @@ export async function sendAllPages(req, res) {
 }
 
 export async function writePage(req, res) {
+  req.page_.id = req.params.id;
   const result = await updatePage(req.page_);
   res.json({ data: result, user: req.user_ });
   res.end();
@@ -27,8 +28,9 @@ export async function deletePage(req, res) {
   res.end();
 }
 
-export async function createNewPage(req, res) {
+export async function createNewPage(req, res, next) {
   try {
+    req.page_.userId = req.user_.id;
     const result = await newPage(req.page_);
     res.json({ data: result, user: req.user_ });
     res.end();

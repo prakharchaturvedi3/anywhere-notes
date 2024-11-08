@@ -1,4 +1,5 @@
 import { findPageById } from "../services/pageService.js";
+import { ErrorConstructors } from "../utils/errorUtils.js";
 import { validArray, validNonEmptyString } from "../utils/validationUtils.js";
 
 export async function pageAccess(req, res, next) {
@@ -6,10 +7,10 @@ export async function pageAccess(req, res, next) {
   try {
     const page = await findPageById(pid);
     if (!page) {
-      throw new Error("Page Not Found");
+      throw new ErrorConstructors.four04Request("Page Not Found");
     }
     if (page.userId !== req.user_.id) {
-      throw new Error("Page Not Found");
+      throw new ErrorConstructors.ForbiddenRequest("Page Not Found");
     }
     req.page_ = page;
   } catch (err) {
@@ -24,14 +25,15 @@ export function pageDataValidaton(req, res, next) {
     tags = [];
   }
   if (!validNonEmptyString(title)) {
-    throw new Error("Empty or Invalid Title");
+    throw new ErrorConstructors.BadRequest("Empty or Invalid Title");
   }
   if (typeof content !== "string") {
-    throw new Error("Invalid Content");
+    throw new ErrorConstructors.BadRequest("Invalid Content");
   }
-
-  req.page_.title = title;
-  req.page_.content = content;
-  req.page_.tags = tags;
+  req.page_ = {
+    title,
+    content,
+    tags,
+  };
   next();
 }

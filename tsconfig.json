@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022", /*JavaScript version that TypeScript will compile your code to*/
+    "allowJs": true, /*Allows JavaScript files (.js) to be part of the TypeScript project*/
+    "resolveJsonModule": true, /*Enables importing .json files as modules in TypeScript*/
+    "moduleDetection": "force", /*forces TypeScript to treat all files as modules*/
+    "isolatedModules": true, /**/
+    "verbatimModuleSyntax": true,
+    /* Strictness */
+    "strict": true, /*Enables all strict type-checking options in TypeScript*/
+    "noUncheckedIndexedAccess": true, /*Enforces strict checking for array and object index access*/
+    "noImplicitOverride": true, 
+    /* If transpiling with TypeScript: */
+    "module": "NodeNext",
+    "sourceMap": true,
+    /* If your code doesn't run in the DOM: */
+    "lib": ["es2022"]
+  }
+}

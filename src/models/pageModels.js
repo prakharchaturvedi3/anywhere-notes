@@ -56,7 +56,7 @@ export function dbUpdatePage(record) {
       },
       data: {
         id: record.id,
-        active: record.active,
+        active: record.active || true,
         content: record.content,
         tags: record.tags,
       },
