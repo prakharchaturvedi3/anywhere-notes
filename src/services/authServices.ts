@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export function verifyToken(bearer) {
+export function verifyToken(bearer: string | undefined) {
   if (!bearer) {
     return null;
   }
@@ -11,7 +11,7 @@ export function verifyToken(bearer) {
   return jwt.verify(token, String(process.env.SECRET) || "SECRETNOTFOUND");
 }
 
-export function createToken(id) {
+export function createToken(id: string) {
   return jwt.sign(
     {
       id,

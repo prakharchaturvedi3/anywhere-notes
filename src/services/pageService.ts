@@ -1,3 +1,4 @@
+import type { page } from "../index.js";
 import {
   dbCreatePage,
   dbReadPageById,
@@ -5,23 +6,25 @@ import {
   dbUpdatePage,
 } from "../models/pageModels.js";
 
-export function findPagesByUserId(id) {
+export function findPagesByUserId(id: string) {
   return dbReadPageByUserId(id);
 }
 
-export function findPageById(id) {
+export function findPageById(id: string) {
   return dbReadPageById(id);
 }
 
-export function newPage(record) {
+
+
+export function newPage(record: page) {
   return dbCreatePage(record);
 }
 
-export function updatePage(record) {
+export function updatePage(record: page) {
   return dbUpdatePage(record);
 }
 
-export function deactivatePage(record) {
+export function deactivatePage(record: page) {
   record.active = false;
   return dbUpdatePage(record);
 }

@@ -4,10 +4,16 @@ import {
   validName,
   validPassword,
 } from "../utils/validationUtils.js";
-import { findUserByEmail } from "../services/userService.js";
+import { comparePassword, findUserByEmail } from "../services/userService.js";
 import { ErrorConstructors } from "../utils/errorUtils.js";
+import type { NextFunction, Request, Response } from "express";
+import type { user } from "../index.js";
 
-export async function registration(req, res, next) {
+export async function registrationCheck(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { email, password } = req.body;
 
   try {
@@ -21,7 +27,10 @@ export async function registration(req, res, next) {
     if (!result) {
       throw new ErrorConstructors.BadRequest("User Not Found");
     }
-    req.user_ = result;
+    if (!(await comparePassword(password, result.password))) {
+      throw new ErrorConstructors.ForbiddenRequest("Invalid Password or Email");
+    }
+    req.body.user_ = {id: result.id};
   } catch (err) {
     next(err);
     return;
@@ -29,16 +38,20 @@ export async function registration(req, res, next) {
   next();
 }
 
-export function protect(req, res, next) {
+export function protect(req: Request, res: Response, next: NextFunction) {
   const claim = verifyToken(req.headers.authorization);
   if (!claim) {
     throw new ErrorConstructors.UnauthorizedRequest("Please login Again!");
   }
-  req.user_ = claim;
+  req.body.user_ = claim;
   next();
 }
 
-export async function availability(req, res, next) {
+export async function emailAvailability(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { email, password, name } = req.body;
   try {
     if (!validEmail(email)) {
@@ -57,6 +70,6 @@ export async function availability(req, res, next) {
   } catch (err) {
     return next(err);
   }
-  req.user_ = req.body;
+  req.body.user_ = {name, email, password};
   next();
 }

@@ -1,20 +1,20 @@
 import * as EmailValidator from "email-validator";
 
-export function validArray(arr) {
+export function validArray(arr: string[]) {
   if (!Array.isArray(arr)) {
     return false;
   }
   return arr.every((ele) => validNonEmptyString(ele));
 }
 
-export function validEmail(email) {
+export function validEmail(email: string) {
   if (!validNonEmptyString(email)) {
     return false;
   }
   return EmailValidator.validate(email);
 }
 
-export function validName(name) {
+export function validName(name: string) {
   if (!validNonEmptyString(name)) {
     return false;
   }
@@ -27,11 +27,11 @@ export function validName(name) {
   return true;
 }
 
-export function validNonEmptyString(str) {
+export function validNonEmptyString(str: string) {
   return typeof str === "string" && str.trim() !== "";
 }
 
-export function validPassword(password) {
+export function validPassword(password: string) {
   if (!validNonEmptyString(password)) {
     return false;
   }
