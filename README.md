@@ -1,2 +1,2 @@
 # AnyWhere Notes
-A Notes taking application on the clound.
+A Note taking application on the clound.
